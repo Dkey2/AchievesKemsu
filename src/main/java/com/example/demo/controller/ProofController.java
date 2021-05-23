@@ -84,7 +84,7 @@ public class ProofController {
     public ResponseEntity newProof(@RequestBody
                                        @ApiParam(value = "Запрос с данными подтверждения достижения")
                                            CreationProofRequest creationProofRequest) {
-        AchievementOfStudent achievementOfStudentTest = achieveService.getAchieveForStudent(creationProofRequest.getAchieveId(), studentService.getStudentId(), AchievementOfStudent.class);
+        AchievementOfStudent achievementOfStudentTest = achieveService.getReceivedAchieveForStudent(creationProofRequest.getAchieveId(), studentService.getStudentId(), AchievementOfStudent.class);
         if (achievementOfStudentTest!=null)
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Данное достижение уже было получено");
         ProofAchieve proofAchieveTest = proofService.getProofByStudentAndAchieve(creationProofRequest.getAchieveId(), studentService.getStudentId(), 2, ProofAchieve.class);
@@ -104,10 +104,11 @@ public class ProofController {
         if (creationProofRequest.getFiles()!=0)
         {
             listFile = fileService.newListFile();
-            proofAchieve.setListFileForProof(null);
+            proofAchieve.setListFileForProof(listFile);
             proofService.newProof(proofAchieve);
             return  ResponseEntity.status(HttpStatus.OK).body(listFile.getIdListFile());
         }
+        proofAchieve.setListFileForProof(null);
         proofService.newProof(proofAchieve);
         return  ResponseEntity.status(HttpStatus.OK).body(0);
     }

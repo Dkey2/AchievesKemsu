@@ -85,6 +85,11 @@ public class AchieveService {
         return achievementReceivedRepository.findByIdAndStudent_Id(achieveId, studentId, type);
     }
 
+    //Получение достижения, принадлежащего студенту
+    public <T> T getReceivedAchieveForStudent(int achieveId, int studentId, Class<T> type) {
+        return achievementReceivedRepository.findByAchievement_IdAndStudent_Id(achieveId, studentId, type);
+    }
+
     //Получение достижения по его названию
     public <T> T getAchieveByName(String achieveName) {
         return achievementRepository.findByName(achieveName);
@@ -174,8 +179,8 @@ public class AchieveService {
     }
 
     //Получение списка неполученных достижений без полученных
-    public <T> List <T> getAchievementsUnreceivedWithoutReceived(List<Integer> statusIds, List<Integer> receivedAchievesIds, int statusAchieveId, Class<T> type) {
-        return achievementRepository.findByStatusActive_IdNotInAndIdNotInAndStatusActive_Id(statusIds, receivedAchievesIds, statusAchieveId, type);
+    public <T> List <T> getAchievementsUnreceivedWithoutReceived(List<Integer> statusIds, List<Integer> achievesIds, int statusAchieveId, Class<T> type) {
+        return achievementRepository.findByStatusActive_IdNotInAndIdNotInAndStatusActive_Id(statusIds, achievesIds, statusAchieveId, type);
     }
 
     //Получение списка неполученных достижений созданных авторизованным или другим студентом

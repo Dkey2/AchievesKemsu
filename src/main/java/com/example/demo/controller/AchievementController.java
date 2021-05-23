@@ -115,9 +115,9 @@ public class AchievementController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Статус с указанным id не найден");
 
         //Список полученных достижений
-        List<AchievementsReceivedView> receivedAchieves;
-        //Список id полученных достижений
-        List<Integer> receivedAchievesIds = new ArrayList<>();
+        List<AchievementOfStudent> receivedAchieves;
+        //Список id достижений соответствующих полученным достижениям
+        List<Integer> achievesIds = new ArrayList<>();
 
         //Список неполученных достижений
         List<AchievementsView> unreceivedAchieves = new ArrayList<>();
@@ -129,16 +129,16 @@ public class AchievementController {
         if(categoryId.isEmpty())
         {
             //Получаем список полученных авторизованным студентом достижений
-            receivedAchieves = achieveService.getAchievementsReceived(studentId, statusId, AchievementsReceivedView.class);
+            receivedAchieves = achieveService.getAchievementsReceived(studentId, statusId, AchievementOfStudent.class);
             //Записываем id в список
-            for(AchievementsReceivedView achReceived : receivedAchieves)
-                receivedAchievesIds.add(achReceived.getId());
+            for(AchievementOfStudent achReceived : receivedAchieves)
+                achievesIds.add(achReceived.getAchievementForAchieveOfStudent().getIdAchieve());
             //Если у студента нет полученных достижений, возвращаем весь список достижений в системе
-            if (receivedAchievesIds.size() == 0)
+            if (achievesIds.size() == 0)
                 unreceivedAchieves.addAll(achieveService.getAchievementsUnreceivedAll(getStatusIds(), statusId, AchievementsView.class));
             //Если у студента есть полученные достижения, то берем из достижений системы только те, которые студент еще не получил
             else
-                unreceivedAchieves.addAll(achieveService.getAchievementsUnreceivedWithoutReceived(getStatusIds(), receivedAchievesIds, statusId, AchievementsView.class));
+                unreceivedAchieves.addAll(achieveService.getAchievementsUnreceivedWithoutReceived(getStatusIds(), achievesIds, statusId, AchievementsView.class));
         }
         //Если категория указана, то работаем с достижениями только этой категории
         else
@@ -147,16 +147,16 @@ public class AchievementController {
             if (categoryId.get()<1 || categoryId.get()>5)
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория с указанным id не найдена");
             //Получем список полченных авторизованным студентом достижений
-            receivedAchieves = achieveService.getAchievementsReceivedCategory(categoryId.get(), studentId, statusId, AchievementsReceivedView.class);
+            receivedAchieves = achieveService.getAchievementsReceivedCategory(categoryId.get(), studentId, statusId, AchievementOfStudent.class);
             //Записываем id в список
-            for(AchievementsReceivedView achReceived : receivedAchieves)
-                receivedAchievesIds.add(achReceived.getId());
+            for(AchievementOfStudent achReceived : receivedAchieves)
+                achievesIds.add(achReceived.getAchievementForAchieveOfStudent().getIdAchieve());
             //Если у студента нет полученных достижений, возвращаем весь список достижений в системе
-            if (receivedAchievesIds.size() == 0)
+            if (achievesIds.size() == 0)
                 unreceivedAchieves.addAll(achieveService.getAchievementsUnreceivedCategory(getStatusIds(), categoryId.get(), statusId, AchievementsView.class));
             //Если у студента есть полученные достижения, то берем из достижений системы только те, которые студент еще не получил
             else
-                unreceivedAchieves.addAll(achieveService.getAchievementsUnreceivedCategoryWithoutReceived(getStatusIds(), receivedAchievesIds, categoryId.get(), statusId, AchievementsView.class));
+                unreceivedAchieves.addAll(achieveService.getAchievementsUnreceivedCategoryWithoutReceived(getStatusIds(), achievesIds, categoryId.get(), statusId, AchievementsView.class));
         }
         //Возвращаем список неполученных авторизованным студентом достижений
         return unreceivedAchieves;
