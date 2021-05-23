@@ -12,6 +12,8 @@ public class BanService {
 
     //Соханение бана
     public void saveBan(Ban ban) {
+        int maxId = banRepository.findFirstByOrderByIdDesc().getIdBan();
+        ban.setIdBan(maxId+1);
         banRepository.save(ban);
     }
 

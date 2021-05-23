@@ -43,7 +43,7 @@ public class UserService {
         return user;
     }
 
-    //Добавляем нового пользователя. При регистрации ему присуждается роль "Студент"
+    //Добавляем нового пользователя. При регистрации ему присуждается роль "Админ"
     public void createNewUserForAdmin(User user) {
         //Получаем нужную роль и статус
         Role role = roleRepository.findByName("Администратор");
@@ -57,12 +57,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //Поиск пользоваетеля по email
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-    public <T> List <T> getAllUser(Class<T> type) {
-        return userRepository.findBy(type);
+    //Добавляем нового пользователя. При регистрации ему присуждается роль "Модератор"
+    public void createNewUserForModer(User user) {
+        //Получаем нужную роль и статус
+        Role role = roleRepository.findByName("Модератор");
+        StatusUser statusUser = statusUserRepository.findByStatusUser("Активен");
+
+        //Записываем данные и сохраняем
+        user.setRoleUser(role);
+        user.setStatusUser(statusUser);
+        user.setPasswordUser(passwordEncoder.encode(user.getPasswordUser()));
+        user.setDateRegistrationUser(LocalDate.now());
+        userRepository.save(user);
     }
 
     /*
@@ -98,24 +104,20 @@ public class UserService {
 
 
     //Получаем бан пользователя по id пользователя
-    public Ban getBan(int userId) {
-        return banRepository.findByUserBanned_Id(userId);
-    }
+    public Ban getBan(int userId) { return banRepository.findByUserBanned_Id(userId); }
 
     //Получаем пользователя по его id
-    public User findUser(Integer userId) {
-        return userRepository.findById(userId, User.class);
-    }
-
-    //Получаем статус пользователя по названию статуса
-    public StatusUser getStatusUser(String status) {
-        return statusUserRepository.findByStatusUser(status);
-    }
+    public User findUser(Integer userId) { return userRepository.findById(userId, User.class); }
 
     //Получаем роль по ее id
-    public Role getRole(int roleId) {
-        return roleRepository.findById(roleId);
-    }
+    public Role getRole(int roleId) { return roleRepository.findById(roleId); }
+
+    //Поиск пользоваетеля по email
+    public User findByEmail(String email) { return userRepository.findByEmail(email); }
+
+    //Получаем статус пользователя по названию статуса
+    public StatusUser getStatusUser(String status) { return statusUserRepository.findByStatusUser(status); }
+
 
 
     //Сохранаяем данные пользователя в базе
@@ -138,6 +140,12 @@ public class UserService {
         return moderatorRepository.findById(moderatorId, type);
     }
 
+
+
+    //Получаем список всех пользователей
+    public <T> List <T> getAllUser(Class<T> type) {
+        return userRepository.findBy(type);
+    }
 
     //Получаем список ролей
     public <T> List <T> getAllRoles(Class<T> type) {

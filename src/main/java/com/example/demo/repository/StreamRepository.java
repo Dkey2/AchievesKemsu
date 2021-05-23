@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.entity.Group;
 import com.example.demo.entity.Stream;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,5 +13,5 @@ public interface StreamRepository extends JpaRepository<Stream, Integer> {
     Stream findById (int streamId);
     Stream findByStreamName (String shortName);
 
-
+    <T> T findFirstByOrderByIdDesc(Class<T> type);
 }

@@ -7,15 +7,17 @@ import java.util.List;
 
 public interface AchievementRepository extends JpaRepository<Achievement, Integer> {
     <T> T findById(int achieveId, Class<T> type);
-    <T> T findByName(String nameAchieve);
+    <T> T findByName(String achieveName);
+    <T> T findFirstByOrderByIdDesc (Class<T> type);
     <T> T findByCreator_IdAndId(int creatorId, int achieveId, Class<T> type);
+
 
     <T> List <T> findBy(Class<T> type);
     <T> List <T> findByIdIn(List<Integer> achievesAnotherStudentIds, Class<T> type);
     <T> List <T> findByCreator_Id(int creatorId, Class<T> type);
     <T> List <T> findByCategory_Id(int categoryId, Class<T> type);
     <T> List <T> findByStatusActive_Id(int statusId, Class<T> type);
-    <T> List <T> findByIdNotInAndIdIn(List<Integer> receivedAchievesIds, List<Integer> idsReceivedAchievesAnotherStudent, Class<T> type);
+    <T> List <T> findByIdNotInAndIdIn(List<Integer> receivedAchievesIds, List<Integer> receivedAchievesAnotherStudentIds, Class<T> type);
     <T> List <T> findByCategory_IdAndStatusActive_Id(int categoryId, int statusId, Class<T> type);
 
     <T> List <T> findByStatusActive_IdNotIn(List<Integer> statusIds, Class<T> type);

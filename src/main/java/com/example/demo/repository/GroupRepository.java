@@ -9,6 +9,8 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     Group findById (int groupId);
     Group findByGroupName (String groupName);
 
+    <T> T findFirstByOrderByIdDesc (Class<T> type);
+
     <T> List <T> findBy (Class<T> type);
     <T> List <T> findByStream_Id (int streamId, Class<T> type);
 }

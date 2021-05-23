@@ -31,7 +31,7 @@ public class FileService {
     public ListFile newListFile() {
         int maxId=0;
 
-        ListFile listFileTest = listFileRepository.findFirstByOrderByIdAsc(ListFile.class);
+        ListFile listFileTest = listFileRepository.findFirstByOrderByIdDesc(ListFile.class);
         if (listFileTest!=null)
             maxId=listFileTest.getIdListFile();
 
@@ -44,6 +44,8 @@ public class FileService {
 
     //Сохраняем файл
     public void saveFile(File file) {
+        int maxId = fileRepository.findFirstByOrderByIdDesc(File.class).getIdFile();
+        file.setIdFile(maxId+1);
         fileRepository.save(file);
     }
 

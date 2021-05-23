@@ -102,7 +102,10 @@ public class MessageErrorController {
     public ErrorAdminView getMessagesErrorAdmin(@PathVariable
                                                     @ApiParam (value = "Id сообщения об ошибке. Not null. >0", example = "21")
                                                             int errorId) {
-        return  messageErrorService.getMessageErrorForAdmin(errorId, ErrorAdminView.class);
+        ErrorAdminView messageError = messageErrorService.getMessageErrorForAdmin(errorId, ErrorAdminView.class);
+        if (messageError==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Сообщение об ошибке с указанным id не найдено");
+        return messageError;
     }
 
     @ApiOperation("Изменение комментария к сообщению об ошибке - для админа")
@@ -130,11 +133,11 @@ public class MessageErrorController {
                                                                 int statusId) {
         MessageError messageError = messageErrorService.getMessageErrorForAdmin(messageId, MessageError.class);
         if (messageError==null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Сообщение об ошибке не найдено");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Сообщение об ошибке с указанным id не найдено");
 
         StatusMessageError statusMessageError = messageErrorService.getStatusMessageError(statusId, StatusMessageError.class);
         if (statusMessageError==null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Статус не найден");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Статус обработки сообщения об ошибке с указанным id не найден");
 
         String oldData = messageError.getStatusMessageError().getStatusErrorName();
         messageError.setStatusMessageError(statusMessageError);

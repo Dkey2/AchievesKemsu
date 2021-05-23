@@ -35,6 +35,8 @@ public class AchieveService {
         Category category = categoryRepository.findById(categoryId);
         achievement.setCategoryOfAchieve(category);
 
+        int maxId = achievementRepository.findFirstByOrderByIdDesc(Achievement.class).getIdAchieve();
+        achievement.setIdAchieve(maxId+1);
         StatusActive statusActive = statusActiveAchieveRepository.findById(1);
         achievement.setStatusActiveOfAchieve(statusActive);
         achievementRepository.save(achievement);
@@ -84,8 +86,8 @@ public class AchieveService {
     }
 
     //Получение достижения по его названию
-    public <T> T getAchieveByName(String nameAchieve) {
-        return achievementRepository.findByName(nameAchieve);
+    public <T> T getAchieveByName(String achieveName) {
+        return achievementRepository.findByName(achieveName);
     }
 
     //Получение достижения по его id
@@ -137,8 +139,8 @@ public class AchieveService {
     }
 
     //Получение списка полученных студентом достижений по id студента и статуса активности
-    public <T> List <T> getAchievementsReceived(int studentId, int statusAchieve, Class<T> type) {
-        return achievementReceivedRepository.findByStudent_IdAndAchievement_StatusActive_Id(studentId, statusAchieve, type);
+    public <T> List <T> getAchievementsReceived(int studentId, int statusAchieveId, Class<T> type) {
+        return achievementReceivedRepository.findByStudent_IdAndAchievement_StatusActive_Id(studentId, statusAchieveId, type);
     }
 
     //Получение списка достижений для студента по id категории и статуса активности
@@ -157,8 +159,8 @@ public class AchieveService {
     }
 
     //Получение списка полученных достижений в определенной категории
-    public <T> List <T> getAchievementsReceivedCategory(int category, int studentId, int statusAchieve, Class<T> type) {
-        return achievementReceivedRepository.findByAchievement_Category_IdAndStudent_IdAndAchievement_StatusActive_Id(category, studentId, statusAchieve, type);
+    public <T> List <T> getAchievementsReceivedCategory(int categoryId, int studentId, int statusAchieveId, Class<T> type) {
+        return achievementReceivedRepository.findByAchievement_Category_IdAndStudent_IdAndAchievement_StatusActive_Id(categoryId, studentId, statusAchieveId, type);
     }
 
     //Получение списка полученных достижений созданных авторизованным или другим студентом

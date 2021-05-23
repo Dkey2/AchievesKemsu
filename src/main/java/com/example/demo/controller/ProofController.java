@@ -44,19 +44,25 @@ public class ProofController {
 
     //На вход принимает id заявки на подтверждение достижения, возвращает эту заявку в виде ProofView (описание там)
     @ApiOperation("Конкретная заявка на подтверждение достижения - для студента")
-    @GetMapping ("/student/proof/{proofId}")
+    @GetMapping("/student/proof/{proofId}")
     public ProofView getProofs(@PathVariable
                                    @ApiParam(value = "id подтверждения достижения. Not null. >0", example = "1")
                                            int proofId) {
         int studentId = studentService.getStudentId();
-        return proofService.getProofStudent(studentId, proofId, ProofView.class);
+        ProofView proof = proofService.getProofStudent(studentId, proofId, ProofView.class);
+        if (proof==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Подтверждение с указанным id не найдено или принадлежит другому студенту");
+        return proof;
     }
 
     @ApiOperation("Список файлов-подтвеждений достижения - для студента")
-    @GetMapping ("/student/listFile/{listFileId}")
+    @GetMapping("/student/listFile/{listFileId}")
     public List<PhotoView> getListFile(@PathVariable
                                            @ApiParam(value = "id листа файлов. Not null. >0", example = "1")
                                                    int listFileId) {
+        ListFile listFile = fileService.getListFileById(listFileId, ListFile.class);
+        if (listFile==null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Лист файлов с указанным id не найден");
         return proofService.getFilesForListFile(listFileId, PhotoView.class);
     }
 
@@ -74,7 +80,7 @@ public class ProofController {
     }
 
     @ApiOperation("Новая заявка на подтверждение достижения - для студента")
-    @PostMapping ("/student/newProof")
+    @PostMapping("/student/newProof")
     public ResponseEntity newProof(@RequestBody
                                        @ApiParam(value = "Запрос с данными подтверждения достижения")
                                            CreationProofRequest creationProofRequest) {

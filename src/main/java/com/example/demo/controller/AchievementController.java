@@ -32,7 +32,7 @@ public class AchievementController {
     @Autowired
     private RewardService rewardService;
     @Autowired
-    private LogService logService;
+    private LogService logService;;
 
     //Список id статусов активности категорий, которые не отображаются для студента
     private List<Integer> getStatusIds() {

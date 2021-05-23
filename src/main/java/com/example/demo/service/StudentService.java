@@ -122,10 +122,12 @@ public class StudentService {
         return studentRepository.findById(studentId, type);
     }
 
+
     //Сохраняем студента
     public void saveStudent(Student student) {
         studentRepository.save(student);
     }
+
 
     //Ищем студентов по фамилии или ее части для студента
     public <T> List <T> getStudentBySubstring(String substring, Class<T> type) {

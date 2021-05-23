@@ -32,6 +32,8 @@ public class MessageErrorService {
         int studentId = studentRepository.findByUser_Id(userId).getIdStudent();
 
         Student student = studentRepository.findById(studentId, Student.class);
+        int maxId = messageErrorRepository.findFirstByOrderByIdDesc(MessageError.class).getIdError();
+        messageError.setIdError(maxId+1);
         messageError.setStudentError(student);
         messageError.setCommentError(null);
         messageErrorRepository.save(messageError);

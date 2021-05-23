@@ -29,7 +29,7 @@ public class EducationService {
     //Создаем новый лист институтов и добавляем туда институты. Институт не может одновременно находиться в нескольких листах
     public ListInstitute newInstitutionsList(ArrayList<Integer> institutionsId) {
         int maxId=0;
-        ListInstitute listInstituteTest = listInstituteRepository.findFirstByOrderByIdAsc();
+        ListInstitute listInstituteTest = listInstituteRepository.findFirstByOrderByIdDesc();
         if (listInstituteTest!=null)
             maxId=listInstituteTest.getIdListInstitute();
         ListInstitute listInstitute = new ListInstitute();
@@ -89,7 +89,15 @@ public class EducationService {
 
 
     //Сохраняем направление
-    public void saveStream (Stream stream) { streamRepository.save(stream); }
+    public void saveStream (Stream stream) {
+        int maxId = streamRepository.findFirstByOrderByIdDesc(Stream.class).getIdStream();
+        stream.setIdStream(maxId+1);
+        streamRepository.save(stream);
+    }
     //Сохраняем группу
-    public void saveGroup (Group group) { groupRepository.save(group); }
+    public void saveGroup (Group group) {
+        int maxId = groupRepository.findFirstByOrderByIdDesc(Group.class).getIdGroup();
+        group.setIdGroup(maxId+1);
+        groupRepository.save(group);
+    }
 }

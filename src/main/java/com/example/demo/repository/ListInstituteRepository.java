@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ListInstituteRepository extends JpaRepository<ListInstitute, Integer> {
     ListInstitute findById (int listInstituteId);
-    ListInstitute findFirstByOrderByIdAsc();
+    ListInstitute findFirstByOrderByIdDesc();
 
     <T> List <T> findBy(Class<T> type);
 }

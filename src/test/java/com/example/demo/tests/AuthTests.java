@@ -13,7 +13,7 @@ public class AuthTests {
     @Test
     public void authTestStatus200() {
         AuthRequest authRequest = new AuthRequest("polka@mail.ru", "12345678");
-        RestAssured.given().baseUri("http://82.179.9.51:11000").basePath("/auth").contentType(ContentType.JSON).body(authRequest)
+        RestAssured.given().baseUri("http://localhost:8080").basePath("/auth").contentType(ContentType.JSON).body(authRequest)
                 .when().log().body().post()
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value());
@@ -22,7 +22,7 @@ public class AuthTests {
     @Test
     public void authTestStatus404InvalidEmail() {
         AuthRequest authRequest = new AuthRequest("pol1ka@mail.ru", "12345678");
-        RestAssured.given().baseUri("http://82.179.9.51:11000").basePath("/auth").contentType(ContentType.JSON).body(authRequest)
+        RestAssured.given().baseUri("http://localhost:8080").basePath("/auth").contentType(ContentType.JSON).body(authRequest)
                 .when().log().body().post()
                 .then().log().body()
                 .statusCode(HttpStatus.NOT_FOUND.value()).and().body("message", IsEqual.equalTo("Пользователь с таким email не найден"));
@@ -32,7 +32,7 @@ public class AuthTests {
     @Test
     public void authTestStatus404InvalidPassword() {
         AuthRequest authRequest = new AuthRequest("polka@mail.ru", "123456789");
-        RestAssured.given().baseUri("http://82.179.9.51:11000").basePath("/auth").contentType(ContentType.JSON).body(authRequest)
+        RestAssured.given().baseUri("http://localhost:8080").basePath("/auth").contentType(ContentType.JSON).body(authRequest)
                 .when().log().body().post()
                 .then().log().body()
                 .statusCode(HttpStatus.NOT_FOUND.value()).and().body("message", IsEqual.equalTo("Неверный пароль"));

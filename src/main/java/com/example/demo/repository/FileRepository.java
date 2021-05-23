@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface FileRepository extends JpaRepository<File, Integer> {
     <T> T findById (int fileId, Class<T> type);
+    <T> T findFirstByOrderByIdDesc (Class<T> type);
+
 
     <T> List <T> findByListFile_Id (int listFileId, Class<T> type);
 }
