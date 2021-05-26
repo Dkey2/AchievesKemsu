@@ -38,7 +38,7 @@ public class RewardController {
     }
 
     @ApiOperation("Создание новой награды - для админа")
-    @PostMapping("/adminn/createReward")
+    @PostMapping("/admin/createReward")
     public ResponseEntity createReward(CreationRewardRequest creationRewardRequest) {
         Reward reward = new Reward();
         reward.setNameReward(creationRewardRequest.getRewardName());
@@ -56,7 +56,7 @@ public class RewardController {
     }
 
     @ApiOperation("Изменение данных о награде - для админа")
-    @PutMapping("/adminn/changeReward/{rewardId}")
+    @PutMapping("/admin/changeReward/{rewardId}")
     public ResponseEntity changeReward(@PathVariable
                                            @ApiParam(value = "Id награды. Not null. >0", example = "3")
                                                    int rewardId,

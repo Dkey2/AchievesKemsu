@@ -139,7 +139,7 @@ public class AuthController {
         user = userService.createNewUserForStudent(user);
 
         //В качестве фото профиля берется стандратная иконка
-        File file = fileService.getFileById(32, File.class);
+        File file = fileService.getFileById(23, File.class);
         fileService.saveFile(file);
 
         //Записываем в нового студента введенные данные

@@ -34,7 +34,7 @@ public class AchievementController {
     @Autowired
     private LogService logService;;
 
-    //Список id статусов активности категорий, которые не отображаются для студента
+    //Список id статусов активности достижений, которые не отображаются для студента
     private List<Integer> getStatusIds() {
         List<Integer> status = new ArrayList<>();
         status.add(1);
@@ -54,6 +54,16 @@ public class AchievementController {
     //////////////////////////////////////////////////////////////////////////////////
     /*                               Студент                                        */
     //////////////////////////////////////////////////////////////////////////////////
+
+    @ApiOperation("Список id статусов активности достижений для студента")
+    @GetMapping("/student/statusActives")
+    private List<StatusActive> getStatusIdsForStudent() {
+        List<StatusActive> statusActives = new ArrayList<>();
+        statusActives.add(achieveService.getStatusActive(2));
+        statusActives.add(achieveService.getStatusActive(3));
+        statusActives.add(achieveService.getStatusActive(4));
+        return statusActives;
+    }
 
     @ApiOperation("Список полученных достижений авторизованным студентом по id статуса активности - для студента")
     @GetMapping("/student/achievementsReceived/{statusId}")
