@@ -8,18 +8,18 @@ import javax.persistence.*;
 public class CodeReset {
 
     @Id
-    private String codeReset;
+    private String id;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public String getCodeReset() {
-        return codeReset;
+    public String getId() {
+        return id;
     }
 
-    public void setCodeReset(String codeReset) {
-        this.codeReset = codeReset;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public User getUserCodeReset() {

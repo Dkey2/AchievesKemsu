@@ -83,7 +83,7 @@ public class RecoveryController {
                                                 String email) {
         int userId = userService.findByEmail(email).getIdUser();
 
-        if (codeService.getCodeReset(userId).getCodeReset().equals(code))
+        if (codeService.getCodeReset(userId).getId().equals(code))
         {
             codeService.deleteCodeReset(codeService.getCodeReset(userId));
             return ResponseEntity.status(HttpStatus.OK).body("Код подтверждения действителен");
@@ -128,12 +128,12 @@ public class RecoveryController {
     private void sendMailReset(String email)  {
         try {
             String code = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
-            int userId = userService.getUserId();
+            int userId = userService.findByEmail(email).getIdUser();
             if (codeService.getCodeReset(userId)!=null)
                 codeService.deleteCodeReset(codeService.getCodeReset(userId));
             CodeReset codeReset = new CodeReset();
-            codeReset.setCodeReset(code);
-            codeReset.setUserCodeReset(userService.getUser());
+            codeReset.setId(code);
+            codeReset.setUserCodeReset(userService.findByEmail(email));
             codeService.saveCodeReset(codeReset);
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
