@@ -103,7 +103,7 @@ public class RewardController {
                     oldData=oldData+" "+fileFormat.get();
                 file.setFormatFile(fileFormat.get());
             }
-            fileService.saveFile(file);
+            fileService.resetFile(file);
         }
         rewardService.saveReward(reward);
         logService.createNewLog(userService.getUserId(), 13, reward.getIdReward(), oldData, reward.getNameReward());

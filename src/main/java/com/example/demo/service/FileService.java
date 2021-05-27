@@ -49,6 +49,11 @@ public class FileService {
         fileRepository.save(file);
     }
 
+    //Сохраняем файл
+    public void resetFile(File file) {
+        fileRepository.save(file);
+    }
+
 
     //Получаем файл по его id
     public <T> T getFileById(int fileId, Class<T> type) {

@@ -128,7 +128,6 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-
     //Ищем студентов по фамилии или ее части для студента
     public <T> List <T> getStudentBySubstring(String substring, Class<T> type) {
         return studentRepository.findByUser_LastNameContainingIgnoreCaseAndUser_StatusUser_StatusUserNotIn(substring, getStatus(), type);

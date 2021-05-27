@@ -528,14 +528,14 @@ public class AchievementController {
             if (achieveDataFile.get().length<1) {
                 File file = achievement.getFileAchieve();
                 file.setDataFile(achieveDataFile.get());
-                fileService.saveFile(file);
+                fileService.resetFile(file);
             }
 
         if (achieveFormatFile.isPresent()) {
             if (!achieveFormatFile.get().equals("") && !achieveFormatFile.get().equals(achievement.getFileAchieve().getFormatFile())) {
                 File file = achievement.getFileAchieve();
                 file.setFormatFile(achieveFormatFile.get().toLowerCase());
-                fileService.saveFile(file);
+                fileService.resetFile(file);
             }
         }
 

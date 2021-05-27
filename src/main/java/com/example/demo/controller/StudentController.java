@@ -143,6 +143,15 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body("Данные успешно изменены");
     }
 
+    @ApiOperation("Удаление аккаунта студентом")
+    @PutMapping("/student/deleteAccount")
+    public ResponseEntity deleteAccount() {
+        User user = userService.getUser();
+        user.setStatusUser(userService.getStatusUser("Удален"));
+        userService.saveUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body("Аккаунт успешно удален. Вы всегда можете восстановить аккаунт через указанную при регистрации почту");
+    }
+
     @ApiOperation("Изменение фотографии профиля")
     @PutMapping("/student/changePhoto")
     public ResponseEntity changePhoto(@RequestBody
@@ -156,9 +165,9 @@ public class StudentController {
         if (request.getData().length==0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Фото пустое");
 
-        //Проверяем стандартное фото(32 id) стоит или нет.
+        //Проверяем стандартное фото(23 id) стоит или нет.
         //Если было фото по умолчанию, то создаем новый файл
-        if (student.getFileStudent().getIdFile()==32) {
+        if (student.getFileStudent().getIdFile()==23) {
             File file = new File();
             file.setFormatFile(request.getFormat());
             file.setDataFile(request.getData());

@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/moderator/*").hasRole("Модератор")
                 .antMatchers("/upr").hasAnyRole("Модератор", "Администратор")
                 .antMatchers("/change/*", "/categories", "/rewards").hasAnyRole("Студент", "Администратор", "Модератор")
-                .antMatchers("/register", "/auth", "/newToken", "/swagger*", "/education/*").permitAll()  //описываем какие url доступны всем пользователям независимо от роли и авторизации
+                .antMatchers("/register", "/auth", "/newToken", "/swagger*", "/education/*", "/code/*").permitAll()  //описываем какие url доступны всем пользователям независимо от роли и авторизации
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //определяем пользователя в системе
     }

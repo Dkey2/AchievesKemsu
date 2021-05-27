@@ -34,7 +34,7 @@ public class RecoveryController {
     private CodeService codeService;
 
     @ApiOperation("Отправка почты для восстановления аккаунта/пароля")
-    @PostMapping("/resetPassword/{email}/{whatRecovering}")
+    @PostMapping("/code/sendEmail/{email}/{whatRecovering}")
     public ResponseEntity resetPassword(@PathVariable
                                             @ApiParam (value = "Электронная почта, на которую был зарегестрирован аккаунт. Not null", example = "patyphonanik@yandex.ru")
                                                     String email,
@@ -93,7 +93,7 @@ public class RecoveryController {
     }
 
     @ApiOperation("Смена пароля для доступа к утерянному акаунту")
-    @PutMapping("/code/reset/password/{password}/{email}")
+    @PutMapping("/code/password/{password}/{email}")
     public ResponseEntity resetCodePassword(@PathVariable
                                                 @ApiParam (value = "Новый пароль. Not null. Не менее 8 символов", example = "hfI86Ugw09")
                                                         String password,
@@ -111,7 +111,7 @@ public class RecoveryController {
     }
 
     @ApiOperation("Восстановление доступа к удаленному аккаунту")
-    @PutMapping("/code/reset/account/{email}")
+    @PutMapping("/code/account/{email}")
     public ResponseEntity resetCodeAccount(@PathVariable
                                                @ApiParam (value = "Электронная почта, на которую зарегестрирован аккаунт. Not null.", example = "qwe123@gmail.com")
                                                        String email) {
