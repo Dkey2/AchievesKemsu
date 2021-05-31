@@ -125,6 +125,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    //Сохранаяем данные пользователя в базе
+    public void savePassword(User user) {
+        user.setPasswordUser(passwordEncoder.encode(user.getPasswordUser()));
+        userRepository.save(user);
+    }
+
     //Сохранаяем данные модератора в базе
     public void saveModer(Moderator moderator) {
         moderatorRepository.save(moderator);
@@ -138,6 +144,10 @@ public class UserService {
 
     public <T> T getModerator(int moderatorId, Class<T> type) {
         return moderatorRepository.findById(moderatorId, type);
+    }
+
+    public <T> T getModeratorByUserId(int userId, Class<T> type) {
+        return moderatorRepository.findByUser_Id(userId, type);
     }
 
 

@@ -32,8 +32,6 @@ public class UserController {
     @Autowired
     private EducationService educationService;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private LogService logService;
 
     @ApiOperation("Изменение имени и фамилии.")
@@ -126,8 +124,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пароль должен состоять не менее чем из 8 символов");
 
         //Если все нормально, записываем новый пароль и сохраняем
-        user.setPasswordUser(passwordEncoder.encode(password));
-        userService.saveUser(user);
+        user.setPasswordUser(password);
+        userService.savePassword(user);
         return ResponseEntity.status(HttpStatus.OK).body("Пароль успешно изменен");
     }
 

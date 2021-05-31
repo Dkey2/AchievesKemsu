@@ -45,8 +45,8 @@ public interface StudentAdminView {
     String getStatusUser();
 
     @ApiModelProperty(value = "Дата регистрации пользователя. Not null", example = "2021-01-01")
-    @Value("#{target.userForStudent.dateRegistration}")
-    LocalDate getDateRegistrationUser();
+    @Value("#{target.userForStudent.dateRegistrationUser}")
+    LocalDate getDateRegistration();
 
     @ApiModelProperty(value = "Полное название института. Not null", example = "Институт фундаментальных наук")
     @Value("#{target.instituteStudent.instituteFullName}")

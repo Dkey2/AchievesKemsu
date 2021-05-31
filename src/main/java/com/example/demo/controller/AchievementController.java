@@ -228,7 +228,7 @@ public class AchievementController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Достижение не найдено или принадлежит другому студенту");
     }
 
-    @ApiOperation("Список полученных достижений авторизованным пользователем, созданных авторизованным или другим студентом - для студента")
+    @ApiOperation("Список полученных достижений авторизованным студентом, созданных авторизованным или другим студентом - для студента")
     @GetMapping("/student/achievementsCreatedReceived")
     public List<AchievementsReceivedView> getCreatedReceived(@RequestParam
                                                                  @ApiParam(value = "Id студента, чей профиль мы просматриваем. Не передается, если просматривается профиль авторизированного студента. Если чужой профиль, то Not null. >0", example = "4")
@@ -255,7 +255,7 @@ public class AchievementController {
         return achieveService.getReceivedAchieveCreatedStudent(getStatusIds(), studentId, userId, AchievementsReceivedView.class);
     }
 
-    @ApiOperation("Список неполученных достижений авторизованным пользователем, созданных авторизованным или другим студентом - для студента")
+    @ApiOperation("Список неполученных достижений авторизованным студентом, созданных авторизованным или другим студентом - для студента")
     @GetMapping("/student/achievementsCreatedUnreceived")
     public List<AchievementsView> getCreatedUnreceived(@RequestParam
                                                                  @ApiParam(value = "Id студента, чей профиль мы просматриваем. Не передается, если просматривается профиль авторизированного студента. Если чужой профиль, то Not null. >0", example = "39")

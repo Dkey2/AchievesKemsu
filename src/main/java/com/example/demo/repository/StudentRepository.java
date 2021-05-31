@@ -34,13 +34,13 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     /*  Поиск по подстроке  */
     <T> List <T> findByUser_LastNameContainingIgnoreCase(String substring, Class<T> type);
+    <T> List <T> findByInstitute_ListInstitute_IdAndUser_LastNameContainingIgnoreCase(int listInstituteId, String substring, Class<T> type);
     <T> List <T> findByUser_LastNameContainingIgnoreCaseAndUser_StatusUser_StatusUserNotIn(String lastName, List<String> status, Class<T> type);
     <T> List <T> findByUser_LastNameContainingIgnoreCaseAndUser_StatusUser_IdOrderByUser_LastNameAsc(String substring, int status, Class<T> type);
+    <T> List <T> findByInstitute_ListInstitute_IdAndUser_LastNameContainingIgnoreCaseAndUser_StatusUser_IdOrderByUser_LastNameAsc(int listInstituteId, String substring, int status, Class<T> type);
 
     <T> List <T> findByOrderByUser_LastNameAsc(Class<T> type);
     <T> List <T> findByUser_StatusUser_IdOrderByUser_LastNameAsc(int statusUserId, Class<T> type);
-
-
-
-
+    <T> List <T> findByInstitute_ListInstitute_IdOrderByUser_LastNameAsc(int listInstituteId, Class<T> type);
+    <T> List <T> findByInstitute_ListInstitute_IdAndUser_StatusUser_IdOrderByUser_LastNameAsc(int listInstituteId, int statusUserId, Class<T> type);
 }

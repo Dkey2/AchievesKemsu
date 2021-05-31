@@ -190,8 +190,8 @@ public class StudentController {
     //////////////////////////////////////////////////////////////////////////////////
 
     @ApiOperation("Список студентов - для админа/модера")
-    @GetMapping("/upr/students")
-    public List<StudentsAdminView> getAllForAdmin(@RequestParam
+    @GetMapping("/admin/students")
+    public List<StudentsAdminView> getStudentsForAdmin(@RequestParam
                                                       @ApiParam(value = "Подстрока с фамилией (или ее частью) студента. Фильтр, может не передаваться. Если передается - Not null", example = "Астахо")
                                                               Optional<String> substring,
                                                   @RequestParam
@@ -208,6 +208,29 @@ public class StudentController {
                 return studentService.getStudentsByStatusUserIdForAdmin(statusUserId.get(), StudentsAdminView.class);
             else
                 return studentService.getStudentsByLastNameAndStatusUserIdForAdmin(substring.get(), statusUserId.get(), StudentsAdminView.class);
+        }
+    }
+
+    @ApiOperation("Список студентов - для админа/модера")
+    @GetMapping("/moderator/students")
+    public List<StudentsAdminView> getStudentsForModer(@RequestParam
+                                                  @ApiParam(value = "Подстрока с фамилией (или ее частью) студента. Фильтр, может не передаваться. Если передается - Not null", example = "Астахо")
+                                                          Optional<String> substring,
+                                                  @RequestParam
+                                                  @ApiParam(value = "Id статуса пользователя. Not null. [1,4]", example = "1")
+                                                          Optional<Integer> statusUserId) {
+        int listInstituteId = userService.getModeratorByUserId(userService.getUserId(), Moderator.class).getListInstituteForModerator().getIdListInstitute();
+        if (statusUserId.isEmpty()) {
+            if(substring.isEmpty())
+                return studentService.getAllStudentsForModer(listInstituteId, StudentsAdminView.class);
+            else
+                return studentService.getStudentsByLastNameForModer(listInstituteId, substring.get(), StudentsAdminView.class);
+        }
+        else {
+            if(substring.isEmpty())
+                return studentService.getStudentsByStatusUserIdForModer(listInstituteId, statusUserId.get(), StudentsAdminView.class);
+            else
+                return studentService.getStudentsByLastNameAndStatusUserIdForModer(listInstituteId, substring.get(), statusUserId.get(), StudentsAdminView.class);
         }
     }
 

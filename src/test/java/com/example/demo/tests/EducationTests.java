@@ -101,8 +101,8 @@ public class EducationTests {
     /** @GetMapping("/moderator/institutionsList/{listInstituteId}") */
     @Test
     public void institutionsListByIdTestStatus200() {
-        String accessToken = getAccessToken(MODER);
-        RestAssured.given().baseUri("http://localhost:8080").basePath("/moderator/institutionsList/{listInstituteId}")
+        String accessToken = getAccessToken(ADMIN);
+        RestAssured.given().baseUri("http://localhost:8080").basePath("/admin/institutionsList/{listInstituteId}")
                 .contentType(ContentType.JSON).header("AUTHORIZATION", "Bearer "+accessToken)
                 .pathParam("listInstituteId", "1")
                 .when().get()
@@ -125,8 +125,8 @@ public class EducationTests {
     /** @GetMapping("/moderator/institutionsList") */
     @Test
     public void institutionsListTestStatus200() {
-        String accessToken = getAccessToken(MODER);
-        RestAssured.given().baseUri("http://localhost:8080").basePath("/moderator/institutionsList")
+        String accessToken = getAccessToken(ADMIN);
+        RestAssured.given().baseUri("http://localhost:8080").basePath("/admin/institutionsList")
                 .contentType(ContentType.JSON).header("AUTHORIZATION", "Bearer "+accessToken)
                 .when().get()
                 .then()

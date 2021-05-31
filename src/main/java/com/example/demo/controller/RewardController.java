@@ -39,7 +39,7 @@ public class RewardController {
 
     @ApiOperation("Создание новой награды - для админа")
     @PostMapping("/admin/createReward")
-    public ResponseEntity createReward(CreationRewardRequest creationRewardRequest) {
+    public ResponseEntity createReward(@RequestBody CreationRewardRequest creationRewardRequest) {
         Reward reward = new Reward();
         reward.setNameReward(creationRewardRequest.getRewardName());
 

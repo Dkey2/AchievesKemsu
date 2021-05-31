@@ -12,8 +12,8 @@ public interface ProofRepository extends JpaRepository<ProofAchieve, Integer> {
     <T> T findByAchievement_IdAndStudent_IdAndStatusRequest_IdNot (int achieveId, int studentId, int statusId, Class<T> type);
 
     <T> List <T> findByStudent_Id (int studentId, Class<T> type);
-    <T> List <T> findByOrderByDateProofDesc(Class<T> type);
-    <T> List <T> findByStatusRequest_IdOrderByDateProofDesc (int statusId, Class<T> type);
+    <T> List <T> findByStudent_Institute_ListInstitute_IdOrderByDateProofDesc(int listInstituteId, Class<T> type);
+    <T> List <T> findByStatusRequest_IdAndStudent_Institute_ListInstitute_IdOrderByDateProofDesc (int statusId, int listInstituteId, Class<T> type);
 
 
 }

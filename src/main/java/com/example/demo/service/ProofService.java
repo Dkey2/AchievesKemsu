@@ -60,8 +60,8 @@ public class ProofService {
     }
 
     //Получение списка подтверждений с определенным статусом рассмотрения
-    public <T> List <T> getProofByStatus(int statusId, Class<T> type) {
-        return proofRepository.findByStatusRequest_IdOrderByDateProofDesc(statusId, type);
+    public <T> List <T> getProofByStatus(int statusId, int listInstituteId, Class<T> type) {
+        return proofRepository.findByStatusRequest_IdAndStudent_Institute_ListInstitute_IdOrderByDateProofDesc(statusId, listInstituteId, type);
     }
 
     //Получение списка подтверждений определенного студента
@@ -70,7 +70,7 @@ public class ProofService {
     }
 
     //Получение списка все подтверждений для модератора
-    public <T> List <T> getAllProofsForModer(Class<T> type) {
-        return proofRepository.findByOrderByDateProofDesc(type);
+    public <T> List <T> getAllProofsForModer(int listInstituteId, Class<T> type) {
+        return proofRepository.findByStudent_Institute_ListInstitute_IdOrderByDateProofDesc(listInstituteId, type);
     }
 }

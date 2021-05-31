@@ -123,10 +123,11 @@ public class ProofController {
     public List<ProofsAdminView> getProofsModer(@RequestParam
                                                     @ApiParam(value = "Id статуса рассмотрения заявки. Может не передаваться, тогда вернет все заявки. Если передается - Not null. [1,4]", example = "2")
                                                 Optional<Integer> statusId) {
+        int listInstituteId = userService.getModeratorByUserId(userService.getUserId(), Moderator.class).getListInstituteForModerator().getIdListInstitute();
         if (statusId.isPresent())
-            return proofService.getProofByStatus(statusId.get(), ProofsAdminView.class);
+            return proofService.getProofByStatus(statusId.get(), listInstituteId, ProofsAdminView.class);
         else
-            return proofService.getAllProofsForModer(ProofsAdminView.class);
+            return proofService.getAllProofsForModer(listInstituteId, ProofsAdminView.class);
     }
 
     @ApiOperation("Конкретная заявка на подтверждение достижения - для админа/модера")

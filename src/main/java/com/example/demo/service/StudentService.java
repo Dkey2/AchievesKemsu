@@ -138,9 +138,19 @@ public class StudentService {
         return studentRepository.findByOrderByUser_LastNameAsc(type);
     }
 
+    //Получаем список студентов для модератора
+    public <T> List <T> getAllStudentsForModer(int listInstituteId, Class<T> type) {
+        return studentRepository.findByInstitute_ListInstitute_IdOrderByUser_LastNameAsc(listInstituteId, type);
+    }
+
     //Ищем студентов по фамилии или ее части для админа
     public <T> List <T> getStudentsByLastNameForAdmin(String substring, Class<T> type) {
         return studentRepository.findByUser_LastNameContainingIgnoreCase(substring, type);
+    }
+
+    //Ищем студентов по фамилии или ее части для модератора
+    public <T> List <T> getStudentsByLastNameForModer(int listInstituteId, String substring, Class<T> type) {
+        return studentRepository.findByInstitute_ListInstitute_IdAndUser_LastNameContainingIgnoreCase(listInstituteId, substring, type);
     }
 
     //Получаем список студентов по id их статуса для админа
@@ -148,9 +158,19 @@ public class StudentService {
         return studentRepository.findByUser_StatusUser_IdOrderByUser_LastNameAsc(statusUserId, type);
     }
 
+    //Получаем список студентов по id их статуса для модератора
+    public <T> List <T> getStudentsByStatusUserIdForModer(int listInstituteId, int statusUserId, Class<T> type) {
+        return studentRepository.findByInstitute_ListInstitute_IdAndUser_StatusUser_IdOrderByUser_LastNameAsc(listInstituteId, statusUserId, type);
+    }
+
     //Ищем студентов по фамилии или ее части и по id их статуса для админа
     public <T> List <T> getStudentsByLastNameAndStatusUserIdForAdmin(String substring, int status, Class<T> type) {
         return studentRepository.findByUser_LastNameContainingIgnoreCaseAndUser_StatusUser_IdOrderByUser_LastNameAsc(substring, status, type);
+    }
+
+    //Ищем студентов по фамилии или ее части и по id их статуса для админа
+    public <T> List <T> getStudentsByLastNameAndStatusUserIdForModer(int listInstituteId, String substring, int status, Class<T> type) {
+        return studentRepository.findByInstitute_ListInstitute_IdAndUser_LastNameContainingIgnoreCaseAndUser_StatusUser_IdOrderByUser_LastNameAsc(listInstituteId, substring, status, type);
     }
 
 }

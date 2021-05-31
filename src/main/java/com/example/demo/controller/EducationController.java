@@ -63,8 +63,8 @@ public class EducationController {
         return educationService.getGroupsForStream(streamId, GroupView.class);
     }
 
-    @ApiOperation("Список институтов в листе институтов по id листа - для модератора")
-    @GetMapping("/moderator/institutionsList/{listInstituteId}")
+    @ApiOperation("Список институтов в листе институтов по id листа - для админа")
+    @GetMapping("/admin/institutionsList/{listInstituteId}")
     public List<InstitutionsView> getListInstitute(@PathVariable
                                                         @ApiParam (value = "Id листа институтов. Not null. >0", example = "1")
                                                                 int listInstituteId) {
@@ -74,8 +74,8 @@ public class EducationController {
         return educationService.getInstitutionsForListInstitute(listInstituteId, InstitutionsView.class);
     }
 
-    @ApiOperation("Список листов институтов - для модератора")
-    @GetMapping("/moderator/institutionsList")
+    @ApiOperation("Список листов институтов - для админа")
+    @GetMapping("/admin/institutionsList")
     public List<ListInstitute> getListsInstitute() {
         return educationService.getListsInstitute(ListInstitute.class);
     }

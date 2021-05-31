@@ -9,4 +9,5 @@ public interface ModeratorRepository extends JpaRepository<Moderator, Integer> {
     <T> List <T> findBy (Class<T> type);
 
     <T> T findById (int moderatorId, Class<T> type);
+    <T> T findByUser_Id (int userId, Class<T> type);
 }

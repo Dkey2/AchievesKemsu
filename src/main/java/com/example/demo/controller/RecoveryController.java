@@ -106,7 +106,7 @@ public class RecoveryController {
         if (password.length()<8)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Пароль должен состоять не менее чем из 8 символов");
         user.setPasswordUser(password);
-        userService.saveUser(user);
+        userService.savePassword(user);
         return ResponseEntity.status(HttpStatus.OK).body("Пароль успешно изменен");
     }
 
